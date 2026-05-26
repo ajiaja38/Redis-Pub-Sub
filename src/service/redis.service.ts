@@ -12,6 +12,7 @@ export const publisherPayloadService = async (
     pubClient.publish(channelName, message)
   } catch (error) {
     logger.error(error)
+    throw error
   }
 }
 
@@ -20,7 +21,7 @@ export const subscriberPayloadService = async (): Promise<void> => {
     subClient.subscribe("publisher/redis", (message) => {
       const data: IPayloadRedis = JSON.parse(message)
 
-      console.log("Data Dari Redis: ", data)
+      logger.info("Subscribe Data Dari Redis: ", data)
     })
   } catch (error) {
     logger.error(error)
